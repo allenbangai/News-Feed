@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">News Feed</string>
+    <string name="news_title">News Title</string>
+    <string name="news_detail">News Detail</string>
+    <string name="published_on_the">Published on </string>
+    <string name="date">date</string>
+    <string name="at">At:</string>
+    <string name="json_text_here">Json Text Here</string>
+</resources>
