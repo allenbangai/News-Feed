@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsfeed.Adapter.NewsFeedAdapter;
 import com.example.newsfeed.Model.NewsFeed;
+import com.example.newsfeed.Utils.NetWorkUtil;
 import com.example.newsfeed.Utils.QueryUtil;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String url = "https://content.guardianapis.com/search?q=debate&tag=" +
             "politics/politics&from-date=2014-01-01&api-key=test";
+    private String connectionStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true); //hasFixedSize();
+
+        connectionStatus = new NetWorkUtil().getInternetConnectivityStatus(this);
 
         new GetData().execute();
     }
@@ -74,8 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 newsFeedAdapter = new NewsFeedAdapter(getApplicationContext(), newsFeeds);
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setAdapter(newsFeedAdapter);
-                textView.setVisibility(View.GONE);
-            }else{
+                textView.setVisibility(View.GONE);            }else{
                 Log.d(TAG, "Json parsing error: ");
                 runOnUiThread(() -> Toast.makeText(getApplicationContext(),
                         "Json parsing error: ", Toast.LENGTH_LONG).show());
@@ -83,4 +86,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Toast.makeText(this, connectionStatus, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(this, connectionStatus, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, connectionStatus, Toast.LENGTH_SHORT).show();
+    }
 }
