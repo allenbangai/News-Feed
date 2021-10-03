@@ -23,6 +23,8 @@ public class NetWorkUtil {
             } else{
                 status = "No internet is available";
             }
+        }else {
+            status = "No internet is available";
         }
         return status;
     }

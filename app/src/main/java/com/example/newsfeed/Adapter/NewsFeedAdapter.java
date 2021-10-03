@@ -1,13 +1,17 @@
 package com.example.newsfeed.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsfeed.Model.NewsFeed;
@@ -25,15 +29,32 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
         this.newsFeedList = newsFeedList;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView newsName, publicationDate, publicationTime, title;
+        ConstraintLayout constraint;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            view = itemView;
+            constraint = itemView.findViewById(R.id.constraint);
             newsName = itemView.findViewById(R.id.news_name);
             publicationTime = itemView.findViewById(R.id.publish_time);
             publicationDate = itemView.findViewById(R.id.publish_date);
             title= itemView.findViewById(R.id.news_title);
+            //setting onclick on each onclick item
+            constraint.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            String stringUrl = newsFeedList.get(getLayoutPosition()).getWebUrl();
+            Toast.makeText(view.getContext(), "Item clicked at position: " + getLayoutPosition() + "\n"
+                    + " And web page opened to: " + stringUrl, Toast.LENGTH_SHORT).show();
+
+            Uri uri = Uri.parse(stringUrl);
+            //create new intent to view the uri
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            //send the intent to launch new activity
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         }
     }
 
@@ -93,12 +114,6 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
         holder.publicationTime.setText(getPublicationDateTime(1, newsFeed));
         holder.title.setText(newsFeed.getWebTitle());
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     /**
