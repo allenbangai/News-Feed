@@ -22,7 +22,6 @@ import java.util.List;
 public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHolder> {
     Context context;
     List<NewsFeed> newsFeedList;
-    View view;
 
     public NewsFeedAdapter(Context context, List<NewsFeed> newsFeedList) {
         this.context = context;
