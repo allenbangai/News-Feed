@@ -15,15 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsfeed.Adapter.NewsFeedAdapter;
 import com.example.newsfeed.Model.NewsFeed;
-import com.example.newsfeed.Utils.GetNews;
+import com.example.newsfeed.Utils.GetNewsLoader;
 import com.example.newsfeed.Utils.NetWorkUtil;
-
 import java.util.List;
-
-/*
-import androidx.loader.app.LoaderManager;
-import androidx.loader.app.LoaderManager.LoaderCallbacks;
-*/
 
 public class MainActivity extends AppCompatActivity implements LoaderCallbacks<List<NewsFeed>> {
     private TextView textView;
@@ -85,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     @NonNull
     @Override
     public android.content.Loader<List<NewsFeed>> onCreateLoader(int id, @Nullable Bundle args) {
-        return new GetNews(this, url);
+        return new GetNewsLoader(this, url);
     }
 
     /**

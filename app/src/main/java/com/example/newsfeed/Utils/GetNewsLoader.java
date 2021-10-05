@@ -2,21 +2,17 @@ package com.example.newsfeed.Utils;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.example.newsfeed.Model.NewsFeed;
-
 import java.util.List;
-
 /* import androidx.loader.content.AsyncTaskLoader; */
 
-public class GetNews extends AsyncTaskLoader<List<NewsFeed>> {
+public class GetNewsLoader extends AsyncTaskLoader<List<NewsFeed>> {
     private List<NewsFeed> newsFeeds;
     private final String url;
 
-    public GetNews(@NonNull Context context, String url) {
+    public GetNewsLoader(@NonNull Context context, String url) {
         super(context);
         this.url = url;
     }

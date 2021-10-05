@@ -53,7 +53,13 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             //send the intent to launch new activity
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+            if(intent.resolveActivity(context.getPackageManager()) != null){
+                //launch new activity for available web browser
+                context.startActivity(intent);
+            }else {
+                //no app available to open browser
+                Toast.makeText(context, "Sorry, No available App to open browser", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
