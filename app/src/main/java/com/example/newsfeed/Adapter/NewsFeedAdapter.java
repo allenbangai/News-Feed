@@ -29,7 +29,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView newsName, publicationDate, publicationTime, title;
+        TextView newsName, publicationDate, publicationTime, title, authorName;
         ConstraintLayout constraint;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -38,6 +38,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
             publicationTime = itemView.findViewById(R.id.publish_time);
             publicationDate = itemView.findViewById(R.id.publish_date);
             title= itemView.findViewById(R.id.news_title);
+            authorName = itemView.findViewById(R.id.author_name);
             //setting onclick on each onclick item
             constraint.setOnClickListener(this);
         }
@@ -118,6 +119,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
         holder.publicationDate.setText(getPublicationDateTime(0, newsFeed));
         holder.publicationTime.setText(getPublicationDateTime(1, newsFeed));
         holder.title.setText(newsFeed.getWebTitle());
+        holder.authorName.setText(getAuthorName(newsFeed));
 
     }
 
@@ -135,5 +137,9 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.ViewHo
         String getDateTime = newsFeed.getWebPublicationDate().replace("Z", "");
         String[] datetime = getDateTime.split("T", 2);
         return datetime[param];//.substring(0, getDateTime.length() - 1);
+    }
+
+    private String getAuthorName(NewsFeed newsFeed){
+        return (newsFeed.getFirstName() + " " + newsFeed.getLastName());
     }
 }

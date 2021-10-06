@@ -1,6 +1,7 @@
 package com.example.newsfeed;
 
 import android.app.LoaderManager.LoaderCallbacks;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,11 +23,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements LoaderCallbacks<List<NewsFeed>> {
     private TextView textView;
     private RecyclerView recyclerView;
-    private NewsFeedAdapter newsFeedAdapter;
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String url = "https://content.guardianapis.com/search?q=debate&tag=" +
-            "politics/politics&from-date=2014-01-01&api-key=test";
+    //private static final String url = "https://content.guardianapis.com/search?q=debate&tag=" +
+            //"politics/politics&from-date=2014-01-01&api-key=test";
     private String connectionStatus;
+    private String url;
 
 
     @Override
@@ -79,33 +80,39 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     @NonNull
     @Override
     public android.content.Loader<List<NewsFeed>> onCreateLoader(int id, @Nullable Bundle args) {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("content.guardianapis.com")
+                .appendPath("search")
+                .appendQueryParameter("q", "debate")
+                .appendQueryParameter("tag","politics/politics")
+                .appendQueryParameter("from-date", "2014-01-01")
+                .appendQueryParameter("api-key", "test")
+                .appendQueryParameter("show-tags", "contributor");
+        url = builder.build().toString();
         return new GetNewsLoader(this, url);
     }
 
-    /**
-     * @param loader
-     * @param newsFeeds
-     * @deprecated
-     */
     @Override
     public void onLoadFinished(android.content.Loader<List<NewsFeed>> loader, List<NewsFeed> newsFeeds) {
 
         if(newsFeeds != null){
             textView.setVisibility(View.GONE);
-            newsFeedAdapter = new NewsFeedAdapter(getApplicationContext(), newsFeeds);
+            NewsFeedAdapter newsFeedAdapter = new NewsFeedAdapter(getApplicationContext(), newsFeeds);
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(newsFeedAdapter);
         }else{
             Log.d(TAG, "Json parsing error: ");
             runOnUiThread(() -> Toast.makeText(getApplicationContext(),
                     "Json parsing error: ", Toast.LENGTH_LONG).show());
-            textView.setText(R.string.json_error);
+
+            textView.setText(R.string.json_error + " " + url);
         }
 
     }
 
     /**
-     * @param loader
+     * @param loader used for loading arraylist in background
      * @deprecated
      */
     @Override

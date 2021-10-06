@@ -6,5 +6,7 @@
     <string name="date">date</string>
     <string name="at">At:</string>
     <string name="json_text_here">Json Text Here</string>
-    <string name="json_error">Json parsing error</string>
+    <string name="json_error">Json parsing error from: </string>
+    <string name="published_by">Published by </string>
+    <string name="author_name">Author Name</string>
 </resources>

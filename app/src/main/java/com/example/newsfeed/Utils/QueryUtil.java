@@ -92,7 +92,10 @@ public class QueryUtil {
             String webTitle = object.getString("webTitle");
             String webUrl = object.getString("webUrl");
 
-            NewsFeed newsFeed = new NewsFeed(sectionName, webPublicationDate, webTitle, webUrl);
+            JSONArray jsonArray1 = object.getJSONArray("tags");
+            String firstName = jsonArray1.getJSONObject(0).getString("firstName");
+            String lastName = jsonArray1.getJSONObject(0).getString("lastName");
+            NewsFeed newsFeed = new NewsFeed(sectionName, webPublicationDate, webTitle, webUrl, firstName, lastName);
             newsFeedList.add(newsFeed);
         }
         return newsFeedList;

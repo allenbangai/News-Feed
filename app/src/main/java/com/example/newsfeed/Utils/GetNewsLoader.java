@@ -2,6 +2,8 @@ package com.example.newsfeed.Utils;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.newsfeed.Model.NewsFeed;
@@ -11,10 +13,13 @@ import java.util.List;
 public class GetNewsLoader extends AsyncTaskLoader<List<NewsFeed>> {
     private List<NewsFeed> newsFeeds;
     private final String url;
+    private final Context context;
+    public TextView textView;
 
     public GetNewsLoader(@NonNull Context context, String url) {
         super(context);
         this.url = url;
+        this.context = context;
     }
 
     @Override
